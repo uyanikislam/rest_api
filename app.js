@@ -1,12 +1,12 @@
 const express = require('express');
+require('dotenv/config');
+const productsRouter=require("./routes/products")
 
 const app= express();
-const mongoose= require('mongoose');
-require('dotenv/config');
-const productsRouter=require('./routes/products')
-
-
 app.use("/products", productsRouter);
+const port = process.env.PORT;
+const mongoose= require('mongoose');
+
 
 
 // fetch get 
@@ -21,10 +21,9 @@ app.use("/products", productsRouter);
 mongoose.connect(
     process.env.DB_CONNECTION,
     {useNewUrlParser:true},
-    ()=> console.log("mongi ok"))
+()=> console.log("mongi ok"))
 
 
-app.listen(process.env.PORT, () => {
-    console.log("server ok")
-});
-
+app.listen(3000, () => {
+    console.log('server ok');
+})
