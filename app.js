@@ -9,11 +9,17 @@ const mongoose= require('mongoose');
 
 
 
-// fetch get 
-// get get
-// create post
-// update put 
-// delete delete 
+const isLoggedIn= false;
+app.use((req,res, next) => {
+    if (!isLoggedIn) {
+        res.send("please log in");
+    } else{
+        next();
+    }
+})
+ app.get("/", (req,res) => {
+    res.send("ok");
+ });
 
 
 
