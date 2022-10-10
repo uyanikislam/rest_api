@@ -1,35 +1,45 @@
-const express = require('express');
-require('dotenv/config');
+const express = require("express");
 const productsRouter=require("./routes/products")
+const mongoose= require("mongoose");
+require("dotenv/config");
+const bodyParser= require("body-parser")
+const cors=require("cors");
+
 
 const app= express();
+
+app.use(bodyParser.json());
+
 app.use("/products", productsRouter);
-const port = process.env.PORT;
-const mongoose= require('mongoose');
-
-
-
-const isLoggedIn= false;
-app.use((req,res, next) => {
-    if (!isLoggedIn) {
-        res.send("please log in");
-    } else{
-        next();
-    }
-})
- app.get("/", (req,res) => {
-    res.send("ok");
- });
-
-
-
 
 mongoose.connect(
     process.env.DB_CONNECTION,
-    {useNewUrlParser:true},
-()=> console.log("mongi ok"))
+    (e) => {
+        if (e) {
+          console.log(e);
+        } else {
+          console.log("mongi ok");
+        }
+      }
+);
 
 
-app.listen(3000, () => {
-    console.log('server ok');
-})
+const port = process.env.PORT ||5000;
+
+
+// const isLoggedIn= false;
+// app.use((req,res, next) => {
+//     if (!isLoggedIn) {
+//         res.send("please log in");
+//     } else{
+//         next();
+//     }
+// })
+//  app.get("/", (req,res) => {
+//     res.send("ok");
+//  });
+
+
+app.listen(port, () => {
+    console.log(`Server ok at ${port}`);
+  });
