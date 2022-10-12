@@ -1,4 +1,5 @@
 const express = require("express");
+const authRouter=require ("./routes/auth");
 const productsRouter=require("./routes/products")
 const mongoose= require("mongoose");
 require("dotenv/config");
@@ -10,7 +11,7 @@ const app= express();
 
 app.use(bodyParser.json());
 
-app.use("/products", productsRouter);
+
 
 mongoose.connect(
     process.env.DB_CONNECTION,
@@ -24,20 +25,10 @@ mongoose.connect(
 );
 
 
+app.use("/auth", authRouter);
+app.use("/products", productsRouter);
 const port = process.env.PORT ||5000;
 
-
-// const isLoggedIn= false;
-// app.use((req,res, next) => {
-//     if (!isLoggedIn) {
-//         res.send("please log in");
-//     } else{
-//         next();
-//     }
-// })
-//  app.get("/", (req,res) => {
-//     res.send("ok");
-//  });
 
 
 app.listen(port, () => {
