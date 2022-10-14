@@ -5,7 +5,7 @@ const mongoose= require("mongoose");
 require("dotenv/config");
 const bodyParser= require("body-parser")
 const cors=require("cors");
-
+const verifyToken= require("./middleware/verifyToken")
 
 const app= express();
 
@@ -26,8 +26,9 @@ mongoose.connect(
 
 
 app.use("/auth", authRouter);
+app.use("/products", verifyToken, productsRouter);
 app.use("/products", productsRouter);
-const port = process.env.PORT ||5000;
+const port = process.env.PORT ||3000;
 
 
 
